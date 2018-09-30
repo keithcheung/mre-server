@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const schema = require('./schema/schema');
+
+const graphqlHTTP = require('express-graphql');
 
 const port = process.env.PORT || 5000;
 
@@ -18,6 +21,13 @@ mongoose
 app.get('/', function(req, res) {
   res.send('Hello Dev!');
 });
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    graphiql: true
+  })
+);
 //
 //                     // Listen to port 5000
 app.listen(port, function() {
