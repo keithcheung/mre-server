@@ -46,20 +46,32 @@ const dummyMovies = [
   }
 ];
 
-const MovieType = new GraphQLObjectType({
-  name: 'Movie',
-  fields: () => ({
-    // returns this object
-    id: { type: GraphQLID },
-    title: { type: GraphQLString },
-    tagline: { type: GraphQLString },
-    overview: { type: GraphQLString },
-    img: { type: GraphQLString },
-    released: { type: GraphQLString },
-    runtime: { type: GraphQLInt },
-    rating: { type: GraphQLFloat }
-  })
-});
+const reviews = [
+  {
+    id: '5af3a84d73c2d363e62d1a62',
+    user: '11a1ffffffffffffffffffff',
+    movie: '22B862FFFFFFFFFFFFFFFFFF',
+    rating: 2.5,
+    timestamp: '2009-12-14T02:52:24.000Z'
+  },
+  {
+    id: '5af3a84d73c2d363e62d1a63',
+    user: '11a1ffffffffffffffffffff',
+    movie: '22B8844FFFFFFFFFFFFFFFFF',
+    rating: 3,
+    timestamp: '2009-12-14T02:52:59.000Z'
+  },
+  {
+    id: '5af3a84d73c2d363e62d1a64',
+    user: '11a1ffffffffffffffffffff',
+    movie: '22B15602FFFFFFFFFFFFFFFF',
+    rating: 3,
+    timestamp: '2009-12-14T02:53:02.000Z'
+  }
+];
+
+const MovieType = require('./types/MovieType');
+const ReviewType = require('./types/ReviewType');
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -68,6 +80,12 @@ const RootQuery = new GraphQLObjectType({
       type: GraphQLList(MovieType),
       resolve(parent, args) {
         return dummyMovies;
+      }
+    },
+    reviews: {
+      type: GraphQLList(ReviewType),
+      resolve(parent, args) {
+        return reviews;
       }
     }
   }
